@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="94dp"
+        android:layout_height="98dp">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buystore"/>
+        <TextView
+            android:layout_width="39dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="65dp"
+            android:text="买商铺"
+            android:textColor="#1f2326"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="94dp"
+        android:layout_height="98dp">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rentstore"/>
+        <TextView
+            android:layout_width="39dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="65dp"
+            android:text="租商铺"
+            android:textColor="#1f2326"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="94dp"
+        android:layout_height="98dp">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buybuild"/>
+        <TextView
+            android:layout_width="52dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="65dp"
+            android:text="买写字楼"
+            android:textColor="#1f2326"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="94dp"
+        android:layout_height="98dp">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rentbuild"/>
+        <TextView
+            android:layout_width="52dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="65dp"
+            android:text="租写字楼"
+            android:textColor="#1f2326"
+            android:textSize="13sp"
+            android:textAlignment="center"
+            />
+    </RelativeLayout>
+</LinearLayout>
