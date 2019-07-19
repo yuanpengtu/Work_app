@@ -1,4 +1,4 @@
-package com.example.kylinarm.searchviewdemo;
+package com.example.kylinarm.searchviewdemo.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

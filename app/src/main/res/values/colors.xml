@@ -7,4 +7,8 @@
 
     <color name="white">#ffffff</color>
     <color name="get_gray_code">#cccccc</color>
+    <color name="down">#3cb950</color>
+    <color name="readysell">#f8b49a</color>
+    <color name="gray">#676c73</color>
+
 </resources>

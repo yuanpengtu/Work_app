@@ -1,22 +1,21 @@
-package com.example.kylinarm.searchviewdemo;
-import android.app.Fragment;
+package com.example.kylinarm.searchviewdemo.Fragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Administrator on 2019/6/17.
- */
+import com.example.kylinarm.searchviewdemo.R;
 
-public class fragment_trend extends Fragment {
+public class fragment_a extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //获取fragmenta这个布局文件
-        View view = inflater.inflate(R.layout.fragment_trend,null);
+        View view = inflater.inflate(R.layout.activity_fragment_a,null);
         return view;
     }
 

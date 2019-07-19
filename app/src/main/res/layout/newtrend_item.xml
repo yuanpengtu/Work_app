@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="70dp"
+    android:background="#f2f5f7">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#43474d"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/compare_price"/>
+    <TextView
+        android:id="@+id/money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textColor="#1f2326"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/compare_price_num"
+        />
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/money"
+        android:layout_marginTop="30dp"
+        android:textSize="12sp"
+        android:textColor="#1f2326"
+        android:layout_marginEnd="20dp"/>
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="11sp"
+        android:text="@string/compare_month"
+        android:textColor="#9aa0a6"/>
+    <ImageView
+        android:layout_width="5dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/arrow"
+        android:layout_toRightOf="@+id/time"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/percentage"
+        android:layout_height="15dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginLeft="3dp"
+        android:layout_toRightOf="@+id/arrow"
+        android:textSize="11sp"
+        android:text="@string/compare_percent" />
+</RelativeLayout>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.example.kylinarm.searchviewdemo.View.UrlImageView
+        android:layout_width="100dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/header"
+        android:scaleType="fitXY"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textColor="#1f2326"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="11dp"
+        android:id="@+id/guesslike_title"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#676c73"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="41dp"
+        android:id="@+id/guesslike_item1"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#676c73"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="41dp"
+        android:layout_toRightOf="@+id/guesslike_item1"
+        android:id="@+id/guesslike_item2"
+        />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="#676c73"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="41dp"
+        android:layout_toRightOf="@id/guesslike_item2"
+        android:id="@+id/guesslike_size"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textColor="#e54b00"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="63dp"
+        android:id="@+id/guesslike_price"
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/around_text"
+        android:textSize="14sp"
+        android:textColor="#676c73"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="63dp"
+        android:layout_toRightOf="@+id/guesslike_price"
+        android:id="@+id/recommend_price_l"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#e54b00"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="63dp"
+        android:layout_toRightOf="@+id/recommend_price_l"
+        android:id="@+id/recommend_price_2"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:layout_marginStart="125dp"
+        android:background="#76ce84"
+        android:id="@+id/status_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_now_default_status"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/guesslike_status"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:layout_marginStart="167dp"
+        android:background="#f3f5f7"
+        android:id="@+id/propetype_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#828890"
+            android:textSize="12sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/guesslike_housetype"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:layout_marginStart="6dp"
+        android:background="#f3f5f7"
+        android:id="@+id/special1_layout"
+        android:layout_toRightOf="@+id/propetype_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#828890"
+            android:textSize="12sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/guesslike_special1"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="87dp"
+        android:layout_marginStart="6dp"
+        android:background="#f3f5f7"
+        android:layout_marginBottom="15.2dp"
+        android:id="@+id/special2_layout"
+        android:layout_toRightOf="@+id/special1_layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#828890"
+            android:textSize="12sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="3dp"
+            android:id="@+id/guesslike_special2"
+            />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">新房界面</string>
+    <string name="default_viewpager_buystore">买商铺</string>
+    <string name="default_viewpager_rentstore">租商铺</string>
+    <string name="default_viewpager_buywrite">买写字楼</string>
+    <string name="default_viewpager_rentwrite">租写字楼</string>
+    <string name="default_viewpager_allbuild">全部楼盘</string>
+    <string name="item_now_default_title">中国铁建香榭国际</string>
+    <string name="item_now_default_housetype">住宅</string>
+    <string name="item_now_default_status">在售</string>
+    <string name="item_now_default_price">36500元/㎡起</string>
+    <string name="item_now_default_region">奉贤  西渡</string>
+    <string name="item_now_default_details">5月19日盛大开盘，完美绽放~</string>
+    <string name="item_now_default_personname">李晓明</string>
+    <string name="item_now_default_action">发布视频动态</string>
+
+
+
+    <string name="footer_error_loading">NETWORK ERROR, TRY AGAIN</string>
+    <string name="footer_nomore_loading">没有更多了</string>
+    <string name="item_shape_write_default_title">特色写字楼看点</string>
+    <string name="item_shape_write_default_special1">金牌物业</string>
+    <string name="item_shape_write_default_special2">知名物业 高端...</string>
+    <string name="item_shape_write_default_special3">地铁沿线</string>
+    <string name="item_shape_write_default_special4">地铁出行 汇聚...</string>
+    <string name="item_shape_write_default_special5">产业园区</string>
+    <string name="item_shape_write_default_special6">园区氛围 产业...</string>
+
+    <string name="item_shape_store_default_title">特色商铺看点</string>
+    <string name="item_shape_store_default_special1">商业街区</string>
+    <string name="item_shape_store_default_special2">日均客流不用愁</string>
+    <string name="item_shape_store_default_special3">社区底商</string>
+    <string name="item_shape_store_default_special4">临近社区 客源...</string>
+    <string name="item_shape_store_default_special5">专业市场</string>
+    <string name="item_shape_store_default_special6">专业客群 集中...</string>
+
+    <string name="compare_month">比上月</string>
+    <string name="compare_price">商铺售价</string>
+    <string name="compare_price_num">36900</string>
+    <string name="compare_percent">3%</string>
+    <string name="hint_text_line">请输入楼盘或地址</string>
+    <string name="now_title_default">现场直击</string>
+    <string name="change_text">换一换</string>
+    <string name="guesslike_title">猜你喜欢</string>
+    <string name="trend_price">36800</string>
+    <string name="trend_price_unit">元/㎡</string>
+    <string name="around_text">周边</string>
 </resources>

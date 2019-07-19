@@ -12,7 +12,7 @@
             android:layout_height="16dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="9dp"
-            android:text="商铺售价"
+            android:text="@string/compare_price"
             android:textColor="#43474d"
             android:textSize="12sp"
             android:lineSpacingExtra="4sp"/>
@@ -22,7 +22,7 @@
             android:layout_height="23dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="24dp"
-            android:text="36800"
+            android:text="@string/trend_price"
             android:textColor="#1f2326"
             android:textSize="17sp"
             android:lineSpacingExtra="6sp"/>
@@ -32,7 +32,7 @@
             android:layout_height="16dp"
             android:layout_marginLeft="81dp"
             android:layout_marginTop="30dp"
-            android:text="元/㎡"
+            android:text="@string/trend_price_unit"
             android:textColor="#1f2326"
             android:textSize="12sp"
             android:lineSpacingExtra="4sp"/>
@@ -44,7 +44,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="47dp"
-            android:text="比上月"
+            android:text="@string/compare_month"
             android:textColor="#9aa0a6"
             android:textSize="11sp"
             android:lineSpacingExtra="4sp"/>
@@ -60,7 +60,7 @@
             android:layout_height="15dp"
             android:layout_marginLeft="76dp"
             android:layout_marginTop="47dp"
-            android:text="3%"
+            android:text="@string/compare_percent"
             android:textColor="#fa4600"
             android:textSize="11sp"
             android:lineSpacingExtra="4sp"/>
