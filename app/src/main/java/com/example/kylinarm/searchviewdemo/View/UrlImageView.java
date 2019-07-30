@@ -6,14 +6,19 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.LruCache;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.model.ImageVideoModelLoader;
 import com.makeramen.roundedimageview.RoundedImageView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import okhttp3.OkHttpClient;
+import okhttp3.internal.DiskLruCache;
+
 public class UrlImageView extends RoundedImageView {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
@@ -85,6 +90,7 @@ public class UrlImageView extends RoundedImageView {
                     //网络连接错误
                     handler.sendEmptyMessage(NETWORK_ERROR);
                 }
+
             }
         }.start();
     }

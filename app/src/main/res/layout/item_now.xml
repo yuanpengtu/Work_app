@@ -101,6 +101,7 @@
         android:id="@+id/details"
         />
     <ImageView
+        android:id="@+id/Thumbnail"
         android:layout_width="324dp"
         android:layout_height="175dp"
         android:layout_marginLeft="20dp"

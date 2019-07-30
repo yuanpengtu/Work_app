@@ -1,13 +1,13 @@
 package com.example.kylinarm.searchviewdemo.Bean;
 
-public class NewTrend {
+public class NewTrendBean {
     private String title;
     private double money;
     private String unit;
     private String percentage;
     private int up_flag;
     private int first_flag;
-    public NewTrend(String title,double money,String unit,String percentage,int up_flag,int first_flag){
+    public NewTrendBean(String title, double money, String unit, String percentage, int up_flag, int first_flag){
         this.title=title;
         this.money=money;
         this.unit=unit;

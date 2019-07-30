@@ -27,7 +27,8 @@
             android:layout_height="30dp"
             android:background="@drawable/back"
             android:layout_marginLeft="9dp"
-            android:layout_marginTop="0dp"/>
+            android:layout_marginTop="0dp"
+            android:id="@+id/share"/>
         <RelativeLayout
             android:layout_width="275dp"
             android:layout_height="30dp"
@@ -57,7 +58,8 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="333dp"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/message"/>
+                android:background="@drawable/message"
+                android:id="@+id/mScanner"/>
     </RelativeLayout>
     <!--顶端搜索栏-->
 
@@ -74,7 +76,9 @@
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/down"
         android:background="@color/white"
-        app:tabTextColor="#3f3f4d">
+        app:tabTextColor="#3f3f4d"
+        app:tabIndicatorHeight="0dp"
+        app:tabBackground="@drawable/tab_selector">
     </android.support.design.widget.TabLayout>
 
 
@@ -89,4 +93,6 @@
         app:refreshEnabled="true"
         app:loadMoreFooterLayout="@layout/layout_irecyclerview_load_more_footer">
     </com.aspsine.irecyclerview.IRecyclerView>
+
+
 </RelativeLayout>

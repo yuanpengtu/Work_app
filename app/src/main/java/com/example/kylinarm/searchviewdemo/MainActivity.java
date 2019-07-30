@@ -1,6 +1,10 @@
 package com.example.kylinarm.searchviewdemo;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,14 +18,17 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.aspsine.irecyclerview.IRecyclerView;
 import com.aspsine.irecyclerview.OnLoadMoreListener;
+import com.example.kylinarm.searchviewdemo.GenerateQRCode.Scanner;
 import com.example.kylinarm.searchviewdemo.View.LoadMoreFooterView;
 import com.example.kylinarm.searchviewdemo.Adapter.RecyclerViewAdapter;
 import com.example.kylinarm.searchviewdemo.Bean.NowBean;
-import com.example.kylinarm.searchviewdemo.Bean.SpecialBean;
+import com.example.kylinarm.searchviewdemo.Bean.GuessLikeBean;
 import com.example.kylinarm.searchviewdemo.Decoration.RecyclerViewSpacesItemDecoration;
 import com.example.kylinarm.searchviewdemo.Fragment.fragment_b;
 import com.example.kylinarm.searchviewdemo.Fragment.fragment_a;
@@ -30,6 +37,7 @@ import com.google.gson.Gson;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,25 +46,28 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnLoadMoreListener{
-    List<Fragment> fragments;
-    fragment_a fragmentA;
-    fragment_b fragmentB;
-    ViewPager viewPager;
-    ImageView trendImage;
-    IRecyclerView recyclerView;
-    LinearLayoutManager linearLayoutManager;
+    private List<Fragment> fragments;
+    private fragment_a fragmentA;
+    private fragment_b fragmentB;
+    private ViewPager viewPager;
+    private ImageView trendImage;
+    private IRecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
     private boolean isRecyclerScroll;
-    //记录上一次位置，防止在同一内容块里滑动 重复定位到tablayout
-    private int lastPos;
-    //用于recyclerView滑动到指定的位置
     private boolean canScroll;
     private int scrollToPosition;
     private LoadMoreFooterView loadMoreFooterView;
     private int mPage=0;
-    List<String> datas;
-    RecyclerViewAdapter mAdapter;
-    int runCount;
-    TabLayout locate;
+    private List<String> datas;
+    private RecyclerViewAdapter mAdapter;
+    private int runCount;
+    private TabLayout locate;
+
+
+
+    private ImageButton share;
+    private ImageButton mScanner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +75,34 @@ public class MainActivity extends AppCompatActivity implements OnLoadMoreListene
         initTabLayout();
         initDatas();
         initIRecyclerView();
+        initImageButton();
+
     }
+
+    private void initImageButton() {
+        share=findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File apkFile = new File(view.getContext().getPackageResourcePath());
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("*/*");
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(apkFile));
+                view.getContext().startActivity(intent);
+            }
+        });
+        mScanner=findViewById(R.id.mScanner);
+        mScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent main=new Intent(MainActivity.this, Scanner.class);
+                startActivity(main);
+
+            }
+        });
+    }
+
     public String convertStraemToString(InputStream inputStream){
 
         BufferedReader bufferedReader = new BufferedReader(
@@ -143,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnLoadMoreListene
             inputStream = getAssets().open("like.json");
             String teachersData = convertStraemToString(inputStream);
             Gson gson = new Gson();
-            SpecialBean common = gson.fromJson(teachersData, SpecialBean.class);
+            GuessLikeBean common = gson.fromJson(teachersData, GuessLikeBean.class);
             Utility.likelist=common;
             Utility.current_item=0;
 
@@ -200,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements OnLoadMoreListene
     private void initIRecyclerView() {
         recyclerView =findViewById(R.id.Irecyclerview);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
@@ -292,5 +331,22 @@ public class MainActivity extends AppCompatActivity implements OnLoadMoreListene
         loadMoreFooterView = (LoadMoreFooterView) recyclerView.getLoadMoreFooterView();
         recyclerView.setOnLoadMoreListener(this);
         recyclerView.setLoadMoreEnabled(true);
+    }
+    public void onBackPressed(){
+        new AlertDialog.Builder(this).setTitle("确认退出吗？")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //MainActivity.this.finish();
+                        System.exit(0);
+                    }
+                })
+                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ;
+                    }
+                }).show();
     }
 }

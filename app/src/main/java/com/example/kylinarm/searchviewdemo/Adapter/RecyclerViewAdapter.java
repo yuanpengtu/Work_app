@@ -1,7 +1,12 @@
 package com.example.kylinarm.searchviewdemo.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.transition.Transition;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -16,9 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aspsine.irecyclerview.IRecyclerView;
-import com.example.kylinarm.searchviewdemo.Bean.NewTrend;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.kylinarm.searchviewdemo.Bean.NewTrendBean;
 import com.example.kylinarm.searchviewdemo.Bean.NowBean;
-import com.example.kylinarm.searchviewdemo.Bean.SpecialBean;
+import com.example.kylinarm.searchviewdemo.Bean.GuessLikeBean;
 import com.example.kylinarm.searchviewdemo.Decoration.RecyclerViewSpacesItemDecoration;
 import com.example.kylinarm.searchviewdemo.Fragment.fragment_b;
 import com.example.kylinarm.searchviewdemo.Fragment.fragment_a;
@@ -36,15 +44,9 @@ import java.util.List;
 import static android.support.v4.content.ContextCompat.getColor;
 
 public class RecyclerViewAdapter extends IRecyclerView.Adapter<IRecyclerView.ViewHolder> {
-    //当前上下文对象
-    Context context;
-    //RecyclerView填充Item数据的List对象
-    List<String> datas;
-    //新房走势的item数据
-    private List<NewTrend> mNewTrendList;
-
-
-    public int id_test = 15;
+    Context mContext;//当前上下文对象
+    List<String> mDatas;//RecyclerView填充Item数据的List对象
+    private List<NewTrendBean> mNewTrendList;//新房走势的item数据
     private static final int TYPE_ViewPager = 0;//viewpager滑动
     private static final int TYPE_Recycler = 1;//新盘走势
     private static final int TYPE_Special = 2;//特色商铺
@@ -54,10 +56,12 @@ public class RecyclerViewAdapter extends IRecyclerView.Adapter<IRecyclerView.Vie
     private static final int TYPE_Writer = 5;//特色写字楼
     private static final int TYPE_Title_Now = 6;//现场直击title
     private static final int TYPE_Title_Like = 7;//猜你喜欢title
-
+    private static final int PAGE_COUNT=2;//VIEWPAGER的页数
+    private static final int DECORATION_NUM=20;//横向RecyclerView的item间的间距
+    private final String PRICE_TEXTSIZE="14";//价格字体大小
     public RecyclerViewAdapter(Context context, List<String> datas) {
-        this.context = context;
-        this.datas = datas;
+        this.mContext = context;
+        this.mDatas = datas;
     }
 
     @NonNull
@@ -147,12 +151,12 @@ public class RecyclerViewAdapter extends IRecyclerView.Adapter<IRecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        return Integer.parseInt(datas.get(position));
+        return Integer.parseInt(mDatas.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return mDatas.size();
     }
 
     class ViewPagerItem extends IRecyclerView.ViewHolder {
@@ -170,41 +174,40 @@ public class RecyclerViewAdapter extends IRecyclerView.Adapter<IRecyclerView.Vie
             fragmentb = new fragment_b();
             fragments.add(fragmenta);
             fragments.add(fragmentb);
-            if (context instanceof FragmentActivity) {
-                FragmentAdpter fragmentAdpter = new FragmentAdpter(((FragmentActivity) context).getSupportFragmentManager(), fragments);
+            if (mContext instanceof FragmentActivity) {
+                FragmentAdpter fragmentAdpter = new FragmentAdpter(((FragmentActivity) mContext).getSupportFragmentManager(), fragments);
                 viewpager.setAdapter(fragmentAdpter);
             }
-
-            viewpager.addOnPageChangeListener(new PageIndicator(context, dotHorizontal, 2));
+            viewpager.addOnPageChangeListener(new PageIndicator(mContext, dotHorizontal, PAGE_COUNT));
         }
     }
 
     class RecyclerItem extends IRecyclerView.ViewHolder {
-        RecyclerView Recycler_item;
-        ImageView trend;
+        RecyclerView mRecycler_item;
+        ImageView mTrend;
 
         public RecyclerItem(@NonNull View itemView) {
             super(itemView);
-            Recycler_item = itemView.findViewById(R.id.testRecycler);
+            mRecycler_item = itemView.findViewById(R.id.testRecycler);
             mNewTrendList = new ArrayList<>();
-            NewTrend item1 = new NewTrend("商铺售价", 33700, "元/㎡", "3.0%", 0, 1);
-            NewTrend item2 = new NewTrend("商铺租金", 5.1, "元/㎡/天", "持平", 2, 0);
-            NewTrend item3 = new NewTrend("写字楼售价", 15000, "元/㎡", "持平", 2, 0);
-            NewTrend item4 = new NewTrend("写字楼租金", 1.8, "元/㎡/天", "持平", 2, 0);
+            NewTrendBean item1 = new NewTrendBean("商铺售价", 33700, "元/㎡", "3.0%", 0, 1);
+            NewTrendBean item2 = new NewTrendBean("商铺租金", 5.1, "元/㎡/天", "持平", 2, 0);
+            NewTrendBean item3 = new NewTrendBean("写字楼售价", 15000, "元/㎡", "持平", 2, 0);
+            NewTrendBean item4 = new NewTrendBean("写字楼租金", 1.8, "元/㎡/天", "持平", 2, 0);
             mNewTrendList.add(item1);
             mNewTrendList.add(item2);
             mNewTrendList.add(item3);
             mNewTrendList.add(item4);
-            LinearLayoutManager layoutManager = new LinearLayoutManager((MainActivity) context);
+            LinearLayoutManager layoutManager = new LinearLayoutManager((MainActivity) mContext);
             layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            Recycler_item.setLayoutManager(layoutManager);
             NewTrendAdapter adapter = new NewTrendAdapter(mNewTrendList);
-            Recycler_item.setAdapter(adapter);
+            mRecycler_item.setLayoutManager(layoutManager);
+            mRecycler_item.setAdapter(adapter);
             HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-            stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.RIGHT_DECORATION, 20);//右间距
-            Recycler_item.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
-            trend = itemView.findViewById(R.id.trend);
-            trend.bringToFront();
+            stringIntegerHashMap.put(RecyclerViewSpacesItemDecoration.RIGHT_DECORATION, DECORATION_NUM);//右间距
+            mRecycler_item.addItemDecoration(new RecyclerViewSpacesItemDecoration(stringIntegerHashMap));
+            mTrend = itemView.findViewById(R.id.trend);
+            mTrend.bringToFront();
         }
     }
 
@@ -241,185 +244,198 @@ public class RecyclerViewAdapter extends IRecyclerView.Adapter<IRecyclerView.Vie
     }
 
     class NowShopItem extends IRecyclerView.ViewHolder {
-        TextView Title;
-        TextView housetype;
-        TextView status;
-        TextView price;
-        TextView location;
-        TextView details;
-        TextView peronname;
-        UrlImageView header_person;
-        UrlImageView titlehead;
-
+        TextView mTitle;
+        TextView mHousetype;
+        TextView mStatus;
+        TextView mPrice;
+        TextView mLocation;
+        TextView mDetails;
+        TextView mPeronname;
+        UrlImageView mHeader_person;
+        UrlImageView mTitlehead;
+        ImageView mThumbnail;
         public NowShopItem(@NonNull View itemView) throws IOException {
             super(itemView);
-            Title = itemView.findViewById(R.id.title);
-            housetype = itemView.findViewById(R.id.housetype);
-            status = itemView.findViewById(R.id.status);
-            price = itemView.findViewById(R.id.price);
-            location = itemView.findViewById(R.id.location);
-            details = itemView.findViewById(R.id.details);
-            peronname = itemView.findViewById(R.id.personname);
-            header_person = itemView.findViewById(R.id.header_person);
-            titlehead = itemView.findViewById(R.id.header_build);
+            mTitle = itemView.findViewById(R.id.title);
+            mHousetype = itemView.findViewById(R.id.housetype);
+            mStatus = itemView.findViewById(R.id.status);
+            mPrice = itemView.findViewById(R.id.price);
+            mLocation = itemView.findViewById(R.id.location);
+            mDetails = itemView.findViewById(R.id.details);
+            mPeronname = itemView.findViewById(R.id.personname);
+            mHeader_person = itemView.findViewById(R.id.header_person);
+            mTitlehead = itemView.findViewById(R.id.header_build);
+            mThumbnail=itemView.findViewById(R.id.Thumbnail);
             NowBean.ResultBean.ShopBuyDongtaiBean data_shop = Utility.speciallist.getResult().getShop_buy_dongtai().get(Utility.current_item_shop);
-            Title.setText(data_shop.getLoupan_info().getLoupan_name());
-            housetype.setText(data_shop.getLoupan_info().getProperty_type());
-            status.setText(data_shop.getLoupan_info().getSale_title());
             String price_line = data_shop.getLoupan_info().getNew_price_value() + data_shop.getLoupan_info().getNew_price_back();
-            price.setText(price_line);
             String region_line = data_shop.getLoupan_info().getRegion_title() + " " + data_shop.getLoupan_info().getSub_region_title();
-            location.setText(region_line);
-            details.setText(data_shop.getDongtai_info().getContent());
-            peronname.setText(data_shop.getConsultant_info().getName());
-            header_person.setImageURL(data_shop.getConsultant_info().getImage());
-            titlehead.setImageURL(data_shop.getLoupan_info().getDefault_image());
+            mTitle.setText(data_shop.getLoupan_info().getLoupan_name());
+            mHousetype.setText(data_shop.getLoupan_info().getProperty_type());
+            mStatus.setText(data_shop.getLoupan_info().getSale_title());
+            mPrice.setText(price_line);
+            mLocation.setText(region_line);
+            mDetails.setText(data_shop.getDongtai_info().getContent());
+            mPeronname.setText(data_shop.getConsultant_info().getName());
+            Glide.with(mContext).load(data_shop.getConsultant_info().getImage()).into(mHeader_person);
+            Glide.with(mContext).load(data_shop.getLoupan_info().getDefault_image()).into(mTitlehead);
+            Glide.with(mContext)
+                    .load(data_shop.getLoupan_info().getDefault_image())
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(324,175) {		//设置宽高
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Drawable drawable = new BitmapDrawable(resource);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                mThumbnail.setBackground(drawable);	//设置背景
+                            }
+                        }
+                    });
             Utility.current_item_shop++;
         }
     }
 
     class NowWriteItem extends IRecyclerView.ViewHolder {
-        TextView Title;
-        TextView housetype;
-        TextView status;
-        TextView price;
-        TextView location;
-        TextView details;
-        TextView peronname;
-        UrlImageView header_person;
-        UrlImageView titlehead;
-
+        TextView mTitle;
+        TextView mHousetype;
+        TextView mStatus;
+        TextView mPrice;
+        TextView mLocation;
+        TextView mDetails;
+        TextView mPeronname;
+        UrlImageView mHeader_person;
+        UrlImageView mTitlehead;
+        ImageView mThumbnail;
         public NowWriteItem(@NonNull View itemView) throws IOException {
             super(itemView);
-            Title = itemView.findViewById(R.id.title);
-            housetype = itemView.findViewById(R.id.housetype);
-            status = itemView.findViewById(R.id.status);
-            price = itemView.findViewById(R.id.price);
-            location = itemView.findViewById(R.id.location);
-            details = itemView.findViewById(R.id.details);
-            peronname = itemView.findViewById(R.id.personname);
-            header_person = itemView.findViewById(R.id.header_person);
-            titlehead = itemView.findViewById(R.id.header_build);
+            mTitle = itemView.findViewById(R.id.title);
+            mHousetype = itemView.findViewById(R.id.housetype);
+            mStatus = itemView.findViewById(R.id.status);
+            mPrice = itemView.findViewById(R.id.price);
+            mLocation = itemView.findViewById(R.id.location);
+            mDetails = itemView.findViewById(R.id.details);
+            mPeronname = itemView.findViewById(R.id.personname);
+            mHeader_person = itemView.findViewById(R.id.header_person);
+            mTitlehead = itemView.findViewById(R.id.header_build);
+            mThumbnail=itemView.findViewById(R.id.Thumbnail);
             NowBean.ResultBean.OfficeRentDongtaiBean data_office= Utility.speciallist.getResult().getOffice_rent_dongtai().get(Utility.current_item_write);
-            Title.setText(data_office.getLoupan_info().getLoupan_name());
-            housetype.setText(data_office.getLoupan_info().getProperty_type());
-            status.setText(data_office.getLoupan_info().getSale_title());
             String price_line = data_office.getLoupan_info().getNew_price_value() + data_office.getLoupan_info().getNew_price_back();
-            price.setText(price_line);
             String region_line = data_office.getLoupan_info().getRegion_title() + " " + data_office.getLoupan_info().getSub_region_title();
-            location.setText(region_line);
-            details.setText(data_office.getDongtai_info().getContent());
-            peronname.setText(data_office.getConsultant_info().getName());
+            mTitle.setText(data_office.getLoupan_info().getLoupan_name());
+            mHousetype.setText(data_office.getLoupan_info().getProperty_type());
+            mStatus.setText(data_office.getLoupan_info().getSale_title());
+            mPrice.setText(price_line);
+            mLocation.setText(region_line);
+            mDetails.setText(data_office.getDongtai_info().getContent());
+            mPeronname.setText(data_office.getConsultant_info().getName());
 
-            header_person.setImageURL(data_office.getConsultant_info().getImage());
-            titlehead.setImageURL(data_office.getLoupan_info().getDefault_image());
+            Glide.with(mContext).load(data_office.getConsultant_info().getImage()).into(mHeader_person);
+            Glide.with(mContext).load(data_office.getLoupan_info().getDefault_image()).into(mTitlehead);
+            Glide.with(mContext)
+                    .load(data_office.getLoupan_info().getDefault_image())
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(324,175) {		//设置宽高
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            Drawable drawable = new BitmapDrawable(resource);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                mThumbnail.setBackground(drawable);	//设置背景
+                            }
+                        }
+                    });
             Utility.current_item_write++;
         }
     }
 
     class FavoriteItem extends IRecyclerView.ViewHolder {
-        UrlImageView header;
-        TextView title;
-        TextView region;
-        TextView sub_region;
-        TextView size;
-        TextView price;
-        TextView status;
-        TextView housetype;
-        TextView special1;
-        TextView sepcial2;
-        RelativeLayout status_layout;
-        RelativeLayout special1_layout;
-        RelativeLayout special2_layout;
-        TextView recommend_price_l;
-        TextView recommend_price_2;
+        UrlImageView mHeader;
+        TextView mTitle;
+        TextView mRegion;
+        TextView mSub_region;
+        TextView mSize;
+        TextView mPrice;
+        TextView mStatus;
+        TextView mHousetype;
+        TextView mSpecial1;
+        TextView mSepcial2;
+        RelativeLayout mStatus_layout;
+        RelativeLayout mSpecial1_layout;
+        RelativeLayout mSpecial2_layout;
+        TextView mRecommend_price_l;
+        TextView mRecommend_price_2;
         public FavoriteItem(@NonNull View itemView) {
             super(itemView);
-            header=itemView.findViewById(R.id.header);
-            title=itemView.findViewById(R.id.guesslike_title);
-            region=itemView.findViewById(R.id.guesslike_item1);
-            sub_region=itemView.findViewById(R.id.guesslike_item2);
-            size=itemView.findViewById(R.id.guesslike_size);
-            price=itemView.findViewById(R.id.guesslike_price);
-            status=itemView.findViewById(R.id.guesslike_status);
-            housetype=itemView.findViewById(R.id.guesslike_housetype);
-            special1=itemView.findViewById(R.id.guesslike_special1);
-            sepcial2=itemView.findViewById(R.id.guesslike_special2);
-            status_layout=itemView.findViewById(R.id.status_layout);
-            special1_layout=itemView.findViewById(R.id.special1_layout);
-            special2_layout=itemView.findViewById(R.id.special2_layout);
-            recommend_price_l=itemView.findViewById(R.id.recommend_price_l);
-            recommend_price_2=itemView.findViewById(R.id.recommend_price_2);
-            SpecialBean.ResultBean.RowsBean data_like=Utility.likelist.getResult().getRows().get(Utility.current_item);
+            mHeader=itemView.findViewById(R.id.header);
+            mTitle=itemView.findViewById(R.id.guesslike_title);
+            mRegion=itemView.findViewById(R.id.guesslike_item1);
+            mSub_region=itemView.findViewById(R.id.guesslike_item2);
+            mSize=itemView.findViewById(R.id.guesslike_size);
+            mPrice=itemView.findViewById(R.id.guesslike_price);
+            mStatus=itemView.findViewById(R.id.guesslike_status);
+            mHousetype=itemView.findViewById(R.id.guesslike_housetype);
+            mSpecial1=itemView.findViewById(R.id.guesslike_special1);
+            mSepcial2=itemView.findViewById(R.id.guesslike_special2);
+            mStatus_layout=itemView.findViewById(R.id.status_layout);
+            mSpecial1_layout=itemView.findViewById(R.id.special1_layout);
+            mSpecial2_layout=itemView.findViewById(R.id.special2_layout);
+            mRecommend_price_l=itemView.findViewById(R.id.recommend_price_l);
+            mRecommend_price_2=itemView.findViewById(R.id.recommend_price_2);
+            GuessLikeBean.ResultBean.RowsBean data_like=Utility.likelist.getResult().getRows().get(Utility.current_item);
 
-            header.setImageURL(data_like.getDefault_image());
 
-            title.setText(data_like.getLoupan_name());
-            region.setText(data_like.getRegion_title());
-            sub_region.setText(data_like.getSub_region_title());
+            Glide.with(mContext).load(data_like.getDefault_image()).into(mHeader);
+            mTitle.setText(data_like.getLoupan_name());
+            mRegion.setText(data_like.getRegion_title());
+            mSub_region.setText(data_like.getSub_region_title());
             String price_line=data_like.getNew_price_value()+data_like.getNew_price_back();
-            price.setText(price_line);
+            mPrice.setText(price_line);
             if(data_like.getArea_rage().equals("")){
-
+                ;
             }
             else{
                 String area_range="建面"+data_like.getArea_rage();
-                size.setText(area_range);
+                mSize.setText(area_range);
             }
-
-
-            status.setText(data_like.getSale_title());
-            housetype.setText(data_like.getLoupan_property_type());
+            mStatus.setText(data_like.getSale_title());
+            mHousetype.setText(data_like.getLoupan_property_type());
             if(data_like.getSale_title().equals("待售")){
-                status_layout.setBackgroundColor(getColor(context,R.color.readysell));
-                price.setText("售价待定");
-                price.setTextSize(Float.parseFloat("14"));
-                price.setTextColor(getColor(context,R.color.gray));
+                mStatus_layout.setBackgroundColor(getColor(mContext,R.color.readysell));
+                mPrice.setText("售价待定");
+                mPrice.setTextSize(Float.parseFloat(PRICE_TEXTSIZE));
+                mPrice.setTextColor(getColor(mContext,R.color.gray));
                 if(data_like.getRecommend_price().getFront()==null){
-                    recommend_price_l.setText("");
+                    mRecommend_price_l.setText("");
                 }
                 else{
                     String value=data_like.getRecommend_price().getValue().toString()+data_like.getRecommend_price().getBack();
-                    recommend_price_2.setText(value);
+                    mRecommend_price_2.setText(value);
                 }
-
             }
             else{
-                recommend_price_l.setText("");
+                mRecommend_price_l.setText("");
             }
-
-
             String tag=data_like.getTags();
             String[] tag_item=tag.split(",");
             int length=tag.split(",").length;
             if(length>1) {
-                special1.setText(tag_item[0]);
-                sepcial2.setText(tag_item[1]);
+                mSpecial1.setText(tag_item[0]);
+                mSepcial2.setText(tag_item[1]);
                 if(tag_item[1].equals("今年交房")||tag_item[1].equals("品牌开发商")){
-                    sepcial2.setText("");
-                    special2_layout.setBackgroundColor(getColor(context,R.color.white));
+                    mSepcial2.setText("");
+                    mSpecial2_layout.setBackgroundColor(getColor(mContext,R.color.white));
                 }
             }
             else if(length==1){
-                special1.setText(tag_item[0]);
-                sepcial2.setText("");
-                special2_layout.setBackgroundColor(getColor(context,R.color.white));
+                mSpecial1.setText(tag_item[0]);
+                mSepcial2.setText("");
+                mSpecial2_layout.setBackgroundColor(getColor(mContext,R.color.white));
             }
             else{
-                special1.setText("");
-                sepcial2.setText("");
-                special1_layout.setBackgroundColor(getColor(context,R.color.white));
-                special2_layout.setBackgroundColor(getColor(context,R.color.white));
+                mSpecial1.setText("");
+                mSepcial2.setText("");
+                mSpecial1_layout.setBackgroundColor(getColor(mContext,R.color.white));
+                mSpecial2_layout.setBackgroundColor(getColor(mContext,R.color.white));
             }
-
             Utility.current_item++;
         }
     }
-
-
-
-
-
-
-
 }
